@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { getOrderById } from "../../../state/Order/Action";
+import { createPayment } from "../../../state/Payment/Action";
 
 const OrderSummary = () => {
   const {order} = useSelector(store => store.order)
@@ -14,8 +15,11 @@ const OrderSummary = () => {
   const orderId = params.get("order_id");
   useEffect(() =>{
     dispatch(getOrderById(orderId))
-    console.log(order)
-  }, [orderId])
+  }, [orderId]);
+
+  const handleCheckout = () =>{
+    dispatch(createPayment(orderId));
+  }
 
   return (
     <div>
@@ -63,6 +67,7 @@ const OrderSummary = () => {
               <Button
                 variant="contained"
                 color="error"
+                onClick={handleCheckout}
                 size="medium"
                 className="mt-3 w-full py-2.5 px-5 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >

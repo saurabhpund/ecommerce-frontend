@@ -9,14 +9,13 @@ import {
 
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
-import {navigation} from "./navigationData";
+import { navigation } from "./navigationData";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthModel from "../Auth/AuthModal";
 import AuthModal from "../Auth/AuthModal";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, logout } from "../../../state/Auth/Action";
 import { getCart } from "../../../state/Cart/Action";
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -29,10 +28,9 @@ export default function Navigation() {
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
   const navigate = useNavigate();
-  const auth = useSelector(store=>store.auth);
-  const {cart} = useSelector(store=>store.cart);
+  const auth = useSelector((store) => store.auth);
+  const { cart } = useSelector((store) => store.cart);
   const dispatch = useDispatch();
-
 
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,30 +52,27 @@ export default function Navigation() {
   };
 
   const handleLogout = () => {
-    dispatch(logout())
+    dispatch(logout());
     handleCloseUserMenu();
-  }
+  };
 
   const handleCategoryClick = (category, section, item, close) => {
     navigate(`/${category.id}/${section.id}/${item.id}`);
     close();
   };
-   
-      useEffect(() => {
-          if(jwt){    
-              dispatch(getUser(jwt));
-              dispatch(getCart());
-          }
-      }, [jwt, auth.jwt]);
 
-      useEffect(() =>{
-        if(auth.user){
-          handleClose();
-        }
-      },[auth]);
-  
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUser(jwt));
+      dispatch(getCart());
+    }
+  }, [jwt, auth.jwt]);
 
- 
+  useEffect(() => {
+    if (auth.user) {
+      setOpenAuthModal(false);
+    }
+  }, [auth]);
 
   return (
     <div className="bg-white pb-10">
@@ -265,14 +260,12 @@ export default function Navigation() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                
-                  <span className="sr-only">Your Company</span>
-                  <img
-                    src="https://res.cloudinary.com/ddkso1wxi/image/upload/v1675919455/Logo/Copy_of_Zosh_Academy_nblljp.png"
-                    alt="Shopwithzosh"
-                    className="h-8 w-8 mr-2"
-                  />
-                
+                <span className="sr-only">Your Company</span>
+                <img
+                  src="https://res.cloudinary.com/ddkso1wxi/image/upload/v1675919455/Logo/Copy_of_Zosh_Academy_nblljp.png"
+                  alt="Shopwithzosh"
+                  className="h-8 w-8 mr-2"
+                />
               </div>
 
               {/* Flyout menus */}
@@ -444,8 +437,8 @@ export default function Navigation() {
                           "aria-labelledby": "basic-button",
                         }}
                       >
-                        <MenuItem >Profile  </MenuItem>
-                        <MenuItem onClick={()  => navigate("/account/order")}>
+                        <MenuItem>Profile </MenuItem>
+                        <MenuItem onClick={() => navigate("/account/order")}>
                           My Orders
                         </MenuItem>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
@@ -463,10 +456,9 @@ export default function Navigation() {
 
                 {/*Search */}
                 <div className="flex items-center lg:ml-6">
-                
                   <p className="p-2 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">Search</span>
-                    
+
                     <MagnifyingGlassIcon
                       className="h-6 w-6"
                       aria-hidden="true"

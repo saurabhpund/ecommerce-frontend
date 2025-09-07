@@ -17,8 +17,6 @@ export default function Checkout() {
   const querySearch = new URLSearchParams(location.search);
   const step = Number(querySearch.get("step"));
 
-
-
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -59,11 +57,10 @@ export default function Checkout() {
               >
                 Back
               </Button>
-             
             </Box>
 
             <div className="mt-10">
-                {step === 2 ? <DeliveryAddressForm /> : <OrderSummary />}
+              {step === 2 ? <DeliveryAddressForm /> : <OrderSummary />}
             </div>
           </React.Fragment>
         )}

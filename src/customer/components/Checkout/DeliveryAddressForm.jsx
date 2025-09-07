@@ -1,13 +1,14 @@
 import React from "react";
 import { Box, Button, Paper, TextField } from "@mui/material";
 import AddressCard from "../AddressCard/AddressCard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createOrder } from "../../../state/Order/Action";
 import { useNavigate } from "react-router-dom";
 
 const DeliveryAddressForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const auth = useSelector(store => store.auth);
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -60,7 +61,7 @@ const DeliveryAddressForm = () => {
             minWidth: 300,
           }}
         >
-          <AddressCard />
+          <AddressCard address={auth?.user?.address[0]} />
           <Button
             variant="contained"
             color="secondary"
