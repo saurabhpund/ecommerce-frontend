@@ -15,6 +15,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { deleteProduct, findProducts } from "../../state/Product/Action";
+import Loader from "./Loader/Loader";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -33,9 +34,9 @@ const ProductTable = () => {
   const dispatch = useDispatch();
   const { product } = useSelector((store) => store);
 
-  const handeProductDelete = (id) =>{
+  const handeProductDelete = (id) => {
     dispatch(deleteProduct(id));
-  }
+  };
 
   useEffect(() => {
     const data = {
@@ -56,46 +57,54 @@ const ProductTable = () => {
   return (
     <>
       <div className="p-5 w-full">
-        <Card>
-          <CardHeader title="All Products" />
-          <TableContainer component={Paper} /* sx={{bgcolor: "#242B2E"}} */>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Images</TableCell>
-                  <TableCell>Dessert (100g serving)</TableCell>
-                  <TableCell align="center">Category</TableCell>
-                  <TableCell align="center">Price</TableCell>
-                  <TableCell align="center">Quantity</TableCell>
-                  <TableCell align="center">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {product?.products?.products?.map((item) => (
-                  <TableRow
-                    key={item.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell scope="row">
-                      <Avatar src={item.imageUrl} />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {item.title}
-                    </TableCell>
-                    <TableCell align="center">{item.category.name}</TableCell>
-                    <TableCell align="center">{item.price}</TableCell>
-                    <TableCell align="center">{item.quantity}</TableCell>
-                    <TableCell align="center">
-                      <Button variant="outlined" color="error" onClick={() => handeProductDelete(item.id)}>
-                        Delete
-                      </Button>
-                    </TableCell>
+      {product?.loading ? (
+        <Loader />
+      ) : (
+          <Card>
+            <CardHeader title="All Products" />
+            <TableContainer component={Paper} /* sx={{bgcolor: "#242B2E"}} */>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Images</TableCell>
+                    <TableCell>Dessert (100g serving)</TableCell>
+                    <TableCell align="center">Category</TableCell>
+                    <TableCell align="center">Price</TableCell>
+                    <TableCell align="center">Quantity</TableCell>
+                    <TableCell align="center">Action</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+                </TableHead>
+                <TableBody>
+                  {product?.products?.products?.map((item) => (
+                    <TableRow
+                      key={item.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell scope="row">
+                        <Avatar src={item.imageUrl} />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {item.title}
+                      </TableCell>
+                      <TableCell align="center">{item.category.name}</TableCell>
+                      <TableCell align="center">{item.price}</TableCell>
+                      <TableCell align="center">{item.quantity}</TableCell>
+                      <TableCell align="center">
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          onClick={() => handeProductDelete(item.id)}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Card>
+      )}
       </div>
     </>
   );

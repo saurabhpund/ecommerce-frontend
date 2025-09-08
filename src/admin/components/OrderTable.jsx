@@ -31,6 +31,7 @@ import {
   deliveryOrder,
   deleteOrder,
 } from "../../state/Admin/Order/Action";
+import Loader from "./Loader/Loader";
 
 const orderStatusStyles = {
   PENDING: { bg: "#FFF8DC", color: "#b58900" },
@@ -103,6 +104,9 @@ const OrderTable = () => {
 
   return (
     <div className="w-full p-5">
+      {
+        adminOrder.loading ? <Loader /> :
+
       <Card>
         <CardHeader sx={{ textAlign: "center" }} title="All Orders" />
         <TableContainer component={Paper}>
@@ -228,6 +232,7 @@ const OrderTable = () => {
           </DialogActions>
         </Dialog>
       </Card>
+      }
     </div>
   );
 };
