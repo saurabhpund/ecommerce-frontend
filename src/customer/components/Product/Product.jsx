@@ -85,8 +85,7 @@ export default function Product() {
   const handlePaginationChange = (e, value) => {
     const searchParams = new URLSearchParams(location.search);
     searchParams.set("page", value);
-    navigate({ search: `?${searchParams.toString()}`});
-
+    navigate({ search: `?${searchParams.toString()}` });
   };
 
   const handleRadioFilterChange = (e, sectionId) => {
@@ -121,7 +120,7 @@ export default function Product() {
     discount,
     sortValue,
     stock,
-    pageNumber
+    pageNumber,
   ]);
 
   return (
@@ -382,7 +381,7 @@ export default function Product() {
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center bg-white py-5">
                   {product?.products?.products?.map((item, i) => (
-                    <ProductCard product={item} key={i}/>
+                    <ProductCard product={item} key={i} />
                   ))}
                 </div>
               </div>
